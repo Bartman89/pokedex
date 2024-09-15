@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {React,useState, useEffect} from 'react'
+import "./App.css"
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+const[pokemones,setPokemones]=useState([])
+
+useEffect( ()=>{
+
+    const appGet = async ()=>{
+        const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=20&offset=0")
+    const data = await response.json()
+
+    const {results}= data
+
+    const datosPokemon = results.map(async (pokemon)=>{
+        const otherResponse = await fetch(pokemon.url)
+        const otherData =await otherResponse.json()
+        return ({
+            id:otherData.id,
+            name:otherData.name,
+            img:otherData.sprites.other.dream_world.front_default
+        })
+    })
+
+    setPokemones(await Promise.all(datosPokemon))
+
+    }
+
+    appGet()
+    
+
+},[])
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <h1>Pokedex</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+        {pokemones.map((pokemon)=>{
+             return (
+                <div key={pokemon.id}> 
+                <img src={pokemon.img} alt={pokemon.name} />
+                <p>{pokemon.name}</p>
+                <span>{pokemon.id}</span>
+                </div>
+             )
+                
+                
+            
+        })}
+    </div>
   )
 }
 
