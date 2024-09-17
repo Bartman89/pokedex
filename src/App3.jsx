@@ -1,63 +1,54 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
+  const [pokemones, setPokemones] = useState([]);
 
-  const [pokemones, setPokemones]=useState([])
-
-
-  useEffect(()=>{
-
-    const getPokemones = async ()=>{
-
+  useEffect(() => {
+    const getPokemones = async () => {
       //Recuperamos el listado de los pokemones
-      const response = await fetch ("https://pokeapi.co/api/v2/pokemon?limit=20&offset=0")
-      const listaPokemones = await response.json()
+      const response = await fetch(
+        "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0"
+      );
+      const listaPokemones = await response.json();
 
-      const {results} = listaPokemones
-      setPokemones(results)
+      const { results } = listaPokemones;
+      setPokemones(results);
 
-      const dataPokemones = pokemones.map( async (pokemon) =>{
+      const dataPokemones = pokemones.map(async (pokemon) => {
+        const response = await fetch(pokemon.url);
+        const poke = await response.json();
 
-        
-        const response = await fetch (pokemon.url)
-        const poke = await response.json()
-        
         return {
-          id:poke.id,
-          name:poke.name,
-          img: poke.sprites.other.dream_world.front_default
-        }
+          id: poke.id,
+          name: poke.name,
+          img: poke.sprites.other.dream_world.front_default,
+        };
+      });
 
-      })
+      setPokemones(await Promise.all(dataPokemones));
+    };
 
-      setPokemones(await Promise.all(dataPokemones))
-
-    }
-
-    getPokemones()
-  },[])
+    getPokemones();
+  }, []);
 
   return (
     <>
-
-
-    
-
-      <div className='App'>
+      <div className="App">
         <h1>Pokedex</h1>
 
-        {pokemones.map((pokemon)=> {return (
-          <div>
-          <img src={pokemon.img} alt={pokemon.name} />
-          <p>{pokemon.name}</p>  
-          <span>{pokemon.id}</span>
-          
-          </div>
-        )})}
+        {pokemones.map((pokemon) => {
+          return (
+            <div>
+              <img src={pokemon.img} alt={pokemon.name} />
+              <p>{pokemon.name}</p>
+              <span>{pokemon.id}</span>
+            </div>
+          );
+        })}
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

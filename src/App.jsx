@@ -1,5 +1,6 @@
 import {React,useState, useEffect} from 'react'
-import "./App.css"
+import Navbar from './components/Navbar'
+
 
 
 
@@ -35,6 +36,8 @@ useEffect( ()=>{
 },[])
 
   return (
+    <>
+    <Navbar></Navbar>
     <div>
         {pokemones.map((pokemon)=>{
              return (
@@ -49,6 +52,8 @@ useEffect( ()=>{
             
         })}
     </div>
+    </>
+    
   )
 }
 
