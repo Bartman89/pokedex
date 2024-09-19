@@ -3,7 +3,6 @@ import {useEffect, useState} from 'react'
 function usePokemones (total){
 
 
-
     
     const URL=`https://pokeapi.co/api/v2/pokemon?limit=${total}&offset=0`
     
@@ -11,6 +10,8 @@ function usePokemones (total){
 
 
     const[pokemones,setPokemones]=useState([])
+
+    const[verMas, setVerMas]=useState(true)
 
     
     
@@ -27,9 +28,9 @@ function usePokemones (total){
             
 
         
-            const {results}= data
+            const {results, next}= data
             
-
+            next === null && setVerMas(false)    
             
         
             const datosPokemon = results.map(async (pokemon)=>{
@@ -39,7 +40,7 @@ function usePokemones (total){
                       {
                     id:otherData.id,
                     nombre:otherData.name,
-                    imagen:otherData.sprites.other.dream_world.front_default
+                    imagen:otherData.sprites.other.dream_world.front_default  || otherData.sprites.front_default
                 })
             })
         
@@ -57,7 +58,7 @@ function usePokemones (total){
         
         },[URL])
 
-        return {pokemones}
+        return {pokemones, verMas}
    
 }
 
