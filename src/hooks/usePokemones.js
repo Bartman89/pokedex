@@ -33,18 +33,28 @@ function usePokemones (total){
             next === null && setVerMas(false)    
             
         
-            const datosPokemon = results.map(async (pokemon)=>{
+            const datosPokemon = await Promise.all(results.map(async (pokemon)=>{
                 const otherResponse = await fetch(pokemon.url)
                 const otherData =await otherResponse.json()
+
+                const abilities = otherData.abilities.map(a=>a.ability.name)
+
+                const stats = otherData.stats.map(s=>{return({name:s.stat.name, base:s.base_stat})})
+
+                const types = otherData.types.map(t=>t.type.name)
+
                 return (
                       {
                     id:otherData.id,
                     nombre:otherData.name,
-                    imagen:otherData.sprites.other.dream_world.front_default  || otherData.sprites.front_default
+                    imagen:otherData.sprites.other.dream_world.front_default  || otherData.sprites.front_default,
+                    abilities,
+                    stats,
+                    types
                 })
             })
-        
-            setPokemones(await Promise.all(datosPokemon))
+            )
+            setPokemones(datosPokemon)
             
             
             

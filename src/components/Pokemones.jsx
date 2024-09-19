@@ -4,15 +4,16 @@ import usePokemones from "../hooks/usePokemones"
 import InfiniteScroll from 'react-infinite-scroll-component'
 import "./pokemones.css"
 import Loader from './Loader'
+import DetallePokemon from './DetallePokemon'
 
 
 
 
-const Pokemon = ({id, imagen, nombre})=>{
+const Pokemon = ({id, imagen, nombre, showDetail})=>{
     return(
         
        
-               <div key={id} className='pokemon-card'> 
+               <div key={id} className='pokemon-card' onClick={showDetail}> 
                <img src={imagen} alt={nombre} className='pokemon-imagen' />
                <p className='pokemon-tittle'>
                <span>#{id} </span>
@@ -30,13 +31,20 @@ const Pokemon = ({id, imagen, nombre})=>{
 
 const Pokemones= ()=>{
 
-    const[total,setTotal]=useState(20)
+    const[total,setTotal]=useState(20)  
+    const[mostrar, setMostrar]=useState({mostrar:false, pokemon:{}})
 
 
     const {pokemones, verMas} =usePokemones(total)
+
+    const showDetail = (pokemon)=>{setMostrar({mostrar:true, pokemon})}
+
+    const closeDetail =(pokemon)=>setMostrar({mostrar:false, pokemon:{}})
         
         
         return (
+            <>
+            <DetallePokemon {...mostrar} cerrar={closeDetail}></DetallePokemon>
             <InfiniteScroll
             dataLength={pokemones.length}
             next={()=>setTotal(total + 20)}
@@ -46,13 +54,14 @@ const Pokemones= ()=>{
             >
                 
             <section className='pokemon-container'>
-                {pokemones.map(pokemon => <Pokemon key={pokemon.id} {...pokemon}></Pokemon>)}
+                {pokemones.map(pokemon => <Pokemon key={pokemon.id} {...pokemon} showDetail={()=>showDetail(pokemon)}></Pokemon>)}
                 
              
              
             </section>
+            
             </InfiniteScroll>
-
+            </>
             
             
     )
