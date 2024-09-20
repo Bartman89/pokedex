@@ -1,5 +1,5 @@
 nav{
-    background-color: #f4db13;
+    background-color: var(--nav)  ;
     display: flex;
     justify-content: space-around;
     align-items: center;

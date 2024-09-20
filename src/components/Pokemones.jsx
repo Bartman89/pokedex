@@ -7,17 +7,17 @@ import Loader from './Loader'
 import DetallePokemon from './DetallePokemon'
 import { VariableBusqueda } from "../context/VariableBusqueda"
 
-
+import "../index.css"
 
 
 const Pokemon = ({id, imagen, nombre, showDetail})=>{
 
 
-
+    
     return(
         
        
-               <div key={id} className='pokemon-card' onClick={showDetail}> 
+               <div key={id} className="pokemon-card"  onClick={showDetail}> 
                <img src={imagen} alt={nombre} className='pokemon-imagen' />
                <p className='pokemon-tittle'>
                <span>#{id} </span>
@@ -50,7 +50,7 @@ const Pokemones= ()=>{
         
         return (
             <>
-            <DetallePokemon {...mostrar} cerrar={closeDetail}></DetallePokemon>
+            <DetallePokemon {...mostrar} cerrar={closeDetail} showDetail={showDetail}></DetallePokemon>
             <InfiniteScroll
             dataLength={pokemones.length}
             next={()=>setTotal(total + 20)}

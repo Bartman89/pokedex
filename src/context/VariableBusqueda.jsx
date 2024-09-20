@@ -32,6 +32,8 @@ export const VariableProvider = ({ children }) => {
         setVerMas(true)
         setDeshabilitado(true)
     }
+
+    
     
 
     const handleChangeVariable = (e) => {
@@ -42,13 +44,21 @@ export const VariableProvider = ({ children }) => {
         
         
 
+        
+
         setDeshabilitado(false)
         
     };
 
+   
+
+
+
     return (
-        <VariableBusqueda.Provider value={{variable, handleChangeVariable, handleBusquedaIndividual, busquedaIndividual, handleReturn, total,setTotal, verMas, deshabilitado}}>
+        <VariableBusqueda.Provider value={{variable, handleChangeVariable, handleBusquedaIndividual, busquedaIndividual, handleReturn, total,setTotal, verMas, deshabilitado }}>
             {children}
         </VariableBusqueda.Provider>
     );
 };
+
+

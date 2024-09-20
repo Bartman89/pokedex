@@ -1,16 +1,31 @@
 import "./detallePokemon.css";
 
+
+import usePokemones from "../hooks/usePokemones";
+
+
 function DetallePokemon({mostrar, pokemon, cerrar}){
+
+    
+
+    
+    
+
+
+
+    
+
+
     return(
         <div className="modal-container" onClick={cerrar}
-        style={{display: mostrar ? 'grid' : 'none'}}
+        style={{display: mostrar  ? 'grid' : 'none'}}
         
         >
             <section className="modal-body">
                 <div className="imagen-container">
                     <img src={pokemon.imagen} alt={pokemon.nombre} className="imagen-detalle" />
                     <section>
-                        {pokemon.types?.map(type=><span className="tag">{type}</span>)}
+                        {pokemon.types?.map(type=><span key={`${pokemon.id}-${Date.now()}`} className="tag">{type}</span>)}
                     </section>
                 </div>
                 <div className="data">
