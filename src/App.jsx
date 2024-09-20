@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import Buscador from './components/Buscador'
 import Pokemones  from './components/Pokemones'
 
-
+import {VariableProvider, VariableBusqueda}from './context/VariableBusqueda'
 
 
 
@@ -14,7 +14,8 @@ function App() {
 
 
   return (
-    <>
+    <VariableProvider>
+
     <Navbar></Navbar>
     <Buscador></Buscador>
     
@@ -23,7 +24,7 @@ function App() {
 
         
     
-    </>
+    </VariableProvider>
     
   )
 }

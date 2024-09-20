@@ -6,7 +6,12 @@ const Navbar = ()=>{
         <nav>
         <Logo></Logo>
         
+        <a href="https://contador-wheat-six.vercel.app/">
+        <span style={{ fontWeight: 'bold' }}>Volver a Home</span>
+            </a>
+
         <div className="switch">
+        
             <Sol></Sol>
             <label>
                 <input type="checkbox" className="check-switch" hidden/>
