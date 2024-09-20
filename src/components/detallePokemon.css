@@ -68,6 +68,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    color: #000;
 }
 
 
@@ -86,4 +87,5 @@
     height: 30px;
     display: grid;
     place-items: center;
+    color: black
 }
